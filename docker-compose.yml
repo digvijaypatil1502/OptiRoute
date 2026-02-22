@@ -1,0 +1,111 @@
+# version: '3.8'
+
+# services:
+#   mysql:
+#     image: mysql:8.0
+#     container_name: optiroute-db
+#     restart: always
+#     environment:
+#       MYSQL_ROOT_PASSWORD: root
+#       MYSQL_DATABASE: optiroute
+#     ports:
+#       - "3306:3306"
+#     networks:
+#       - optiroute-net
+#     healthcheck:
+#       test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+#       timeout: 20s
+#       retries: 10
+
+#   backend:
+#     build: ./backend
+#     container_name: optiroute-backend
+#     ports:
+#       - "8081:8081"
+#     environment:
+#       DB_HOST: mysql
+#       DB_USER: root
+#       DB_PASS: root
+#       JWT_SECRET: 9a4f2c8d3b7a1e6f4g5h8i0j2k4l6m8n0p2q4r6s8t0v2x4z69a4f2c8d3b7a1e6f4g5h8i0j2k4l6m8n0p2q4r6s8t0v2x4z6
+#     depends_on:
+#       mysql:
+#         condition: service_healthy
+#     networks:
+#       - optiroute-net
+
+#   frontend:
+#     build: ./frontend
+#     container_name: optiroute-frontend
+#     ports:
+#       - "3000:80"
+#     depends_on:
+#       - backend
+#     networks:
+#       - optiroute-net
+
+# networks:
+#   optiroute-net:
+#     driver: bridge
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: optiroute-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: optiroute
+    ports:
+      - "3307:3306"
+    networks:
+      - optiroute-net
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      timeout: 20s
+      retries: 10
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  backend:
+    build: ./backend
+    container_name: optiroute-backend
+    ports:
+      - "8080:8080"
+    environment:
+      DB_HOST: mysql
+      DB_USER: root
+      DB_PASS: root
+      REDIS_HOST: redis
+      JWT_SECRET: 9a4f2c8d3b7a1e6f4g5h8i0j2k4l6m8n0p2q4r6s8t0v2x4z69a4f2c8d3b7a1e6f
+    depends_on:
+      redis:
+        condition: service_started
+      mysql:
+        condition: service_healthy
+    networks:
+      - optiroute-net
+
+  redis:
+    image: redis:7-alpine
+    container_name: optiroute-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - optiroute-net
+
+  frontend:
+    build: ./frontend
+    container_name: optiroute-frontend
+    ports:
+      - "3001:80"
+    depends_on:
+      - backend
+    networks:
+      - optiroute-net
+
+networks:
+  optiroute-net:
+    driver: bridge
+
+volumes:
+  mysql_data:

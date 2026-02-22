@@ -1,0 +1,6 @@
+/* Admin Dashboard specific overrides if needed. 
+Most styles are now handled by App.css global classes and inline JSX styles for standard consistency. */
+
+.admin-dashboard-container {
+    /* Placeholder if we need specific container tweaks */
+}

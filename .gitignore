@@ -1,0 +1,9 @@
+# Docker
+*.pid
+
+# Environment variables
+.env
+
+# OS files
+.DS_Store
+Thumbs.db

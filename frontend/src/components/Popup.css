@@ -1,0 +1,96 @@
+.popup-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.popup-content {
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    padding: 16px 20px;
+    border-radius: 16px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
+    min-width: 320px;
+    max-width: 450px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Success Style */
+.popup-container.success .popup-content {
+    background: rgba(6, 95, 70, 0.85);
+    background: linear-gradient(135deg, rgba(6, 95, 70, 0.9), rgba(16, 185, 129, 0.8));
+    border-color: rgba(52, 211, 153, 0.3);
+    color: white;
+}
+
+/* Error Style */
+.popup-container.error .popup-content {
+    background: rgba(153, 27, 27, 0.85);
+    background: linear-gradient(135deg, rgba(153, 27, 27, 0.9), rgba(220, 38, 38, 0.8));
+    border-color: rgba(248, 113, 113, 0.3);
+    color: white;
+}
+
+/* Warning Style */
+.popup-container.warning .popup-content {
+    background: rgba(185, 28, 28, 0.85);
+    background: linear-gradient(135deg, rgba(185, 28, 28, 0.9), rgba(239, 68, 68, 0.8));
+    border-color: rgba(252, 165, 165, 0.3);
+    color: white;
+}
+
+.popup-icon {
+    font-size: 1.4rem;
+    margin-right: 16px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.popup-message {
+    flex: 1;
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.4;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.popup-close {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-left: 12px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.7;
+    transition: all 0.2s;
+}
+
+.popup-close:hover {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.25);
+    transform: scale(1.1);
+}
